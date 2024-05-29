@@ -1,10 +1,18 @@
 
 import asyncio
 from temporalio.client import Client
+from client import TemporalClient
 from workflow import HelloWorkflow
 
+
+
 async def main():
+    
+    #different sdk-client for workflow and worker
     client = await Client.connect("localhost:7233")
+
+    # only single python-sdk-client for worker and workflow
+    # client = await TemporalClient().get_client()
     result = await client.execute_workflow(
         HelloWorkflow.run,
         "temporal_python_sdk",

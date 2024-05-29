@@ -5,10 +5,7 @@ from workflow import HelloWorkflow
 from activity import hello_activity
 
 async def main():
-	client = await Client.connect("localhost:7233")
-
-	print(f"Client: {client}")
-	
+	client = await Client.connect("localhost:7233")	
 	worker = Worker(
 			client,
 			workflows = [HelloWorkflow],

@@ -5,9 +5,6 @@ from workflow import HelloWorkflow
 
 async def main():
     client = await Client.connect("localhost:7233")
-
-    print(f"Client: {client}")
-    
     result = await client.execute_workflow(
         HelloWorkflow.run,
         "temporal_python_sdk",

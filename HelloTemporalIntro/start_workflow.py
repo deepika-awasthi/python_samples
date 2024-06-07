@@ -5,7 +5,6 @@ from client import TemporalClient
 from workflow import HelloWorkflow
 
 
-
 async def main():
     
     #different sdk-client for workflow and worker
@@ -13,6 +12,13 @@ async def main():
 
     # only single python-sdk-client for worker and workflow
     # client = await TemporalClient().get_client()
+
+
+
+    # adding delay with timer 
+
+    # await asyncio.sleep(30)
+
     result = await client.execute_workflow(
         HelloWorkflow.run,
         "temporal_python_sdk",

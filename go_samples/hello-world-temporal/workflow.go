@@ -40,7 +40,6 @@ type App struct {
 }
 
 func OrderWorkflow(ctx workflow.Context, orderID string) error {
-
     workflow.SetQueryHandler(ctx, OrderWorkflowStateQuery, func() (WorkflowView, error) {
         return WorkflowView{
             OrderID:  orderID,

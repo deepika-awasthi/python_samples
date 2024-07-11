@@ -18,7 +18,7 @@ func main() {
 	defer c.Close()
 
 	// This worker hosts both Workflow and Activity functions
-	w := worker.New(c, app.GreetingTaskQueue, worker.Options{})
+	w := worker.New(c, app.GreetingTaskQueue, i.Options{})
 	w.RegisterWorkflow(app.OrderWorkflow)
 	// w.RegisterActivity(app.ComposeGreeting)
 

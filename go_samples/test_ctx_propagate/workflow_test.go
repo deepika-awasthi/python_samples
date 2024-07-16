@@ -37,16 +37,16 @@ func (s *UnitTestSuite) TestCtxWorkflow() {
         s.Equal(expected_id, my_id)
         return logMessage, nil
     }).Times(3)
-    
-    var workflowResult string
+
+    var res string
     s.env.ExecuteWorkflow(CtxWorkflow)
 
     s.True(s.env.IsWorkflowCompleted())
     s.NoError(s.env.GetWorkflowError())
-    err := s.env.GetWorkflowResult(&workflowResult)
+    err := s.env.GetWorkflowResult(&res)
     s.NoError(err)
 
-    log.Println("completed successfully with result:", workflowResult)
+    log.Println("completed successfully with result:", res)
 }
 
 func TestUnitTestSuite(t *testing.T) {

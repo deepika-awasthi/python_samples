@@ -32,12 +32,12 @@ func (s *UnitTestSuite) TestCtxWorkflow() {
     expected_id := "default-test-workflow-id"
     s.env.OnActivity(CtxActivity, mock.Anything).Return(func(ctx context.Context) (string, error) {
         my_id := ctx.Value(pass_test_key).(string)
-        logMessage := "TestSampleWorkflow: Trace ID in Activity: " + my_id
+        logMessage := "id " + my_id
         log.Println(logMessage)
         s.Equal(expected_id, my_id)
         return logMessage, nil
-    }).Times(3) // Allowing for up to 3 retries
-
+    }).Times(3)
+    
     var workflowResult string
     s.env.ExecuteWorkflow(CtxWorkflow)
 

@@ -19,11 +19,11 @@ func (t *CustomContextPropagator) Inject(ctx context.Context, writer workflow.He
     if value != nil {
         payload, err := converter.GetDefaultDataConverter().ToPayload(value)
         if err != nil {
-            log.Printf("Inject: Error converting context value to payload: %v", err)
+            log.Printf(err)
             return err
         }
         writer.Set(string(pass_test_key), payload)
-        log.Printf("Inject: Trace ID injected into header: %s", value)
+        log.Printf(value)
     }
     return nil
 }
@@ -33,9 +33,9 @@ func (t *CustomContextPropagator) Extract(ctx context.Context, reader workflow.H
         var my_id string
         if err := converter.GetDefaultDataConverter().FromPayload(payload, &my_id); err == nil {
             ctx = context.WithValue(ctx, pass_test_key, my_id)
-            log.Printf("Extract: Trace ID extracted from header: %s", my_id)
+            log.Printf("Extract: %s", my_id)
         } else {
-            log.Printf("Extract: Error converting payload to context value: %v", err)
+            log.Printf(err)
             return ctx, err
         }
     }
@@ -47,11 +47,10 @@ func (t *CustomContextPropagator) InjectFromWorkflow(ctx workflow.Context, write
     if value != nil {
         payload, err := converter.GetDefaultDataConverter().ToPayload(value)
         if err != nil {
-            log.Printf("InjectFromWorkflow: Error converting context value to payload: %v", err)
             return err
         }
         writer.Set(string(pass_test_key), payload)
-        log.Printf("InjectFromWorkflow: Trace ID injected into header: %s", value)
+        
     }
     return nil
 }
@@ -61,9 +60,7 @@ func (t *CustomContextPropagator) ExtractToWorkflow(ctx workflow.Context, reader
         var my_id string
         if err := converter.GetDefaultDataConverter().FromPayload(payload, &my_id); err == nil {
             ctx = workflow.WithValue(ctx, pass_test_key, my_id)
-            log.Printf("ExtractToWorkflow: Trace ID extracted from header: %s", my_id)
         } else {
-            log.Printf("ExtractToWorkflow: Error converting payload to context value: %v", err)
             return ctx, err
         }
     }

@@ -12,7 +12,7 @@ func CtxWorkflow(ctx workflow.Context) (string, error) {
 
     // Extract the ID from the workflow context
     wk_id := workflow.GetInfo(ctx).WorkflowExecution.ID
-    log.Printf("Trace ID set in workflow context: %s", wk_id)
+    log.Printf(wk_id)
 
     ctx = workflow.WithValue(ctx, pass_test_key, wk_id)
 

@@ -28,13 +28,13 @@ func (s *UnitTestSuite) SetupTest() {
 }
 
 func (s *UnitTestSuite) TestCtxWorkflow() {
-    log.Println("Starting TestSampleWorkflow...")
-    expectedTraceID := "default-test-workflow-id"
+    log.Println("Starting ...")
+    expected_id := "default-test-workflow-id"
     s.env.OnActivity(CtxActivity, mock.Anything).Return(func(ctx context.Context) (string, error) {
-        traceID := ctx.Value(pass_test_key).(string)
-        logMessage := "TestSampleWorkflow: Trace ID in Activity: " + traceID
+        my_id := ctx.Value(pass_test_key).(string)
+        logMessage := "TestSampleWorkflow: Trace ID in Activity: " + my_id
         log.Println(logMessage)
-        s.Equal(expectedTraceID, traceID)
+        s.Equal(expected_id, my_id)
         return logMessage, nil
     }).Times(3) // Allowing for up to 3 retries
 
@@ -46,7 +46,7 @@ func (s *UnitTestSuite) TestCtxWorkflow() {
     err := s.env.GetWorkflowResult(&workflowResult)
     s.NoError(err)
 
-    log.Println("TestSampleWorkflow completed successfully with result:", workflowResult)
+    log.Println("completed successfully with result:", workflowResult)
 }
 
 func TestUnitTestSuite(t *testing.T) {

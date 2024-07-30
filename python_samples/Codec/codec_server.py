@@ -43,6 +43,7 @@ def build_codec_server() -> web.Application:
         [
             web.post("/encode", partial(apply, codec.encode)),
             web.post("/decode", partial(apply, codec.decode)),
+            web.post("/encode_failure", partial(apply, codec.decode)),
             web.options("/decode", cors_options),
         ]
     )

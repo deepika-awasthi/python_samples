@@ -2,31 +2,31 @@
 package main
 
 import (
-	"hello-world-temporal/app"
 	"log"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
+	"hello-world-temporal/app" // Import your workflow package
 )
 
 func main() {
-	// Create the client object just once per process
-	c, err := client.Dial(client.Options{})
+	// Create Temporal client
+	c, err := client.NewClient(client.Options{})
 	if err != nil {
-		log.Fatalln("unable to create Temporal client", err)
+		log.Fatalln("Unable to create Temporal client", err)
 	}
 	defer c.Close()
 
-	// This worker hosts both Workflow and Activity functions
-	w := worker.New(c, app.GreetingTaskQueue, i.Options{})
-	w.RegisterWorkflow(app.OrderWorkflow)
-	// w.RegisterActivity(app.ComposeGreeting)
+	// Create a worker to listen on the task queue
+	w := worker.New(c, "test-selector-task-queue", worker.Options{})
 
-	// Start listening to the Task Queue
+	// Register the workflow and activity
+	w.RegisterWorkflow(app.TestSelector)
+	w.RegisterActivity(app.Test1)
+
+	// Start the worker
 	err = w.Run(worker.InterruptCh())
 	if err != nil {
-		log.Fatalln("unable to start Worker", err)
+		log.Fatalln("Unable to start worker", err)
 	}
 }
-
-// @@@SNIPEND
